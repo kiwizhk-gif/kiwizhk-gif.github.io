@@ -1,7 +1,19 @@
 {
-  "balance": 0.050377778,
+  "balance": 0.032848138,
   "pnl": -0.000889,
-  "positions": [],
+  "positions": [
+    {
+      "mint": "9rhML1LA4cb2oid1NRf72K5nTq42DHM4vDF5i8zVpump",
+      "name": "Only Up",
+      "symbol": "Up",
+      "entrySol": 0.015,
+      "entryTokens": 168148953990,
+      "buyTx": "4zaQjHv8iGpWDcdKuG49J2yMSTnkcs2hYLp6sXkTKjQSEdQsVJEs15PZkHTKTECXDi6ojrhQanPqBZZS7imV56KS",
+      "buyTime": 1779962542391,
+      "highestValue": 0.015,
+      "alertScore": 20
+    }
+  ],
   "trades": [
     {
       "time_iso": "05:39:51",
@@ -50,20 +62,28 @@
       "sol": 0.011704,
       "pnl": -0.000296,
       "tx": "2qvrRxkw39KwJ4fU..."
+    },
+    {
+      "time_iso": "06:02:22",
+      "type": "BUY",
+      "symbol": "Up",
+      "sol": -0.015,
+      "pnl": null,
+      "tx": "4zaQjHv8iGpWDcdK..."
     }
   ],
   "perps": {
     "positions": [],
-    "metrics": {
-      "total": 0,
-      "winRate": 0,
-      "totalPnl": 0
-    }
+    "trades": [],
+    "totalPnl": 0,
+    "wins": 0,
+    "losses": 0,
+    "running": true
   },
   "running": true,
   "metrics": {
-    "total_trades": 6,
-    "buys": 3,
+    "total_trades": 7,
+    "buys": 4,
     "sells": 3,
     "wins": 0,
     "losses": 3,
@@ -75,9 +95,9 @@
     "biggest_win": -0.000296,
     "biggest_loss": -0.000296,
     "max_drawdown": 0.000889,
-    "roi_pct": -2.5,
+    "roi_pct": -1.7,
     "sharpe": 0
   },
-  "updated_at": 1779962487.314376,
-  "updated_at_iso": "2026-05-28T06:01:27"
+  "updated_at": 1779962549.0652404,
+  "updated_at_iso": "2026-05-28T06:02:29"
 }
