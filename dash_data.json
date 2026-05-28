@@ -1657,16 +1657,16 @@
       "symbol": "Agkit",
       "mcap": 2262.8948320191816,
       "entry_sol": 0.005,
-      "age": 462.65263509750366
+      "age": 482.61107087135315
     },
     {
       "symbol": "Feetcoin",
       "mcap": 2265.630487255557,
       "entry_sol": 0.005,
-      "age": 2.9802322387695312e-05
+      "age": 19.95846676826477
     }
   ],
-  "tokens_found": 1742,
+  "tokens_found": 1750,
   "start_time": 1779954267.8702471,
   "running": true,
   "tx_history": [
@@ -3343,6 +3343,6 @@
     "avg_trade_size": 0.005132,
     "sol_price_usd": 145
   },
-  "updated_at": 1779960634.8138888,
-  "updated_at_iso": "2026-05-28T05:30:34"
+  "updated_at": 1779960649.322098,
+  "updated_at_iso": "2026-05-28T05:30:49"
 }
