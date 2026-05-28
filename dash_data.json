@@ -1,6 +1,6 @@
 {
   "balance": 0.056439818,
-  "pnl": 0,
+  "pnl": 0.00210858,
   "trades": [
     {
       "time": "2026-05-28T02:37:00.318573",
@@ -26,25 +26,55 @@
       "sol": 0.005,
       "tx": "2UzPggN2op9HbCq2cAHP9xEn8Krvokc28TSkWY9AQccNmBMiR5XQx98jBKdKJ6gL4gxdBeLQtfxyLsLgwJEru1wx",
       "time": 1779954275.9436285
+    },
+    {
+      "type": "SELL",
+      "symbol": "dih",
+      "sol": 0.010401,
+      "pnl": 0.005401,
+      "tx": "5nU3gZrYFrYxi6mJbuXFYUJb3S8B3mqLFssSF8tGreYLhhbWQi4EwoVDMrADr2BVSny189ba5LwdSQggmbmMmL25",
+      "time": 1779954297.715221
+    },
+    {
+      "type": "BUY",
+      "symbol": "MAYHEM",
+      "sol": 0.005,
+      "tx": "77rDGXgsWPVCCRteg4KYBFKXdXg89hNmuQa8K3qH3YprbBJGA8wANpSicDS237NUNCV2BdCFqaueNH6LQWoFe2p",
+      "time": 1779954307.5566533
+    },
+    {
+      "type": "STOP",
+      "symbol": "MAYHEM",
+      "sol": 0.001708,
+      "pnl": -0.003292,
+      "tx": "4Am9WTWRoTsTj9M3MjYuKjqSHYXBtfxMNkB3X6eAcMo7r2BwktYuzzqk5fL7HQKbDZ5aaqPYHEApsUCK3WrccGdy",
+      "time": 1779954332.6192615
+    },
+    {
+      "type": "BUY",
+      "symbol": "ending it",
+      "sol": 0.005,
+      "tx": "3BvBaVxpc3s6PVrbsrPDwn3mam4ndBrLZC4euE2HT5akVQ5oNqtyHh2v6hUSUwmVXmojrXWDNHGCdBQDtsDJ6FWg",
+      "time": 1779954336.224682
     }
   ],
   "positions": [
     {
-      "symbol": "dih",
-      "mcap": 3795.790772142227,
-      "entry_sol": 0.005,
-      "age": 19.18218207359314
-    },
-    {
       "symbol": "BENDOG",
       "mcap": 3746.917769100474,
       "entry_sol": 0.005,
-      "age": 11.883640050888062
+      "age": 60.281060218811035
+    },
+    {
+      "symbol": "ending it",
+      "mcap": 2280.8139379375198,
+      "entry_sol": 0.005,
+      "age": 7.152557373046875e-06
     }
   ],
-  "tokens_found": 42,
+  "tokens_found": 52,
   "start_time": 1779954267.8702471,
   "running": true,
-  "updated_at": 1779954293.7245598,
-  "updated_at_iso": "2026-05-28T03:44:53"
+  "updated_at": 1779954338.7409647,
+  "updated_at_iso": "2026-05-28T03:45:38"
 }
