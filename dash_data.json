@@ -1,6 +1,6 @@
 {
-  "balance": 0.056429818,
-  "balance_usd": 8.18,
+  "balance": 0.002324818,
+  "balance_usd": 0.34,
   "pnl": 0,
   "trades": [
     {
@@ -21,7 +21,7 @@
     }
   ],
   "positions": [],
-  "tokens_found": 1140,
+  "tokens_found": 1178,
   "start_time": 1779955011.343426,
   "running": true,
   "tx_history": [
@@ -66,6 +66,6 @@
     "avg_trade_size": 0.012,
     "sol_price_usd": 145
   },
-  "updated_at": 1779959178.0233676,
-  "updated_at_iso": "2026-05-28T05:06:18"
+  "updated_at": 1779959300.91263,
+  "updated_at_iso": "2026-05-28T05:08:20"
 }
