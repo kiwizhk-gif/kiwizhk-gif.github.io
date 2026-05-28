@@ -1,37 +1,71 @@
 {
   "balance": 0.056439818,
+  "balance_usd": 8.18,
   "pnl": 0,
   "trades": [
     {
-      "time": "2026-05-28T02:37:00.318573",
-      "action": "BUY",
-      "token": "The chubby duck",
-      "mint": "52Ssz49XmVnxZdTApMjDKruZpTmPduaawEFNxWQBpump",
-      "amount_sol": 0.012,
-      "out_amount": "104818018990",
-      "price_impact": "0.0437122743508920419578859086",
-      "tx": "4Mz26dG1C4dVmmhom5DCqYccHPuGb6GiDSvEqjbU1L6YL4y9HgWKpHEp7FxGweEkvzyX2hjZvrpaiHBca5hS1a6o",
-      "status": "executed"
-    },
-    {
+      "time_iso": "02:37:00",
+      "time_unix": 1779950220.318573,
       "type": "BUY",
-      "symbol": "Grek",
-      "sol": 0.01324,
-      "tx": "HbaqW7kV8f1ASfNjNeoaKUWhtz4VxSAPBVT6Q9P1ncvEEpuFv52zdxVx5D5RL8t5vqArwDGRKf18tdkgz3jeRw8",
-      "time": 1779955115.0121388
+      "symbol": "The chubby duck",
+      "sol": 0.012,
+      "amount_sol": 0.012,
+      "pnl": null,
+      "pnl_sol": null,
+      "pnl_pct": null,
+      "tx_id": "4Mz26dG1C4dVmmho...",
+      "tx_full": "4Mz26dG1C4dVmmhom5DCqYccHPuGb6GiDSvEqjbU1L6YL4y9HgWKpHEp7FxGweEkvzyX2hjZvrpaiHBca5hS1a6o",
+      "price_impact": "0.043712274350892041",
+      "status": "executed",
+      "time": 1779950220.318573
     }
   ],
-  "positions": [
-    {
-      "symbol": "Grek",
-      "mcap": 2971.8886197144807,
-      "entry_sol": 0.01324015861045929,
-      "age": 21.80111837387085
-    }
-  ],
-  "tokens_found": 37,
-  "start_time": 1779955109.7483695,
+  "positions": [],
+  "tokens_found": 82,
+  "start_time": 1779955068.0489035,
   "running": true,
-  "updated_at": 1779955138.1506007,
-  "updated_at_iso": "2026-05-28T03:58:58"
+  "tx_history": [
+    {
+      "time_iso": "02:37:00",
+      "time_unix": 1779950220.318573,
+      "type": "BUY",
+      "symbol": "The chubby duck",
+      "sol": 0.012,
+      "amount_sol": 0.012,
+      "pnl": null,
+      "pnl_sol": null,
+      "pnl_pct": null,
+      "tx_id": "4Mz26dG1C4dVmmho...",
+      "tx_full": "4Mz26dG1C4dVmmhom5DCqYccHPuGb6GiDSvEqjbU1L6YL4y9HgWKpHEp7FxGweEkvzyX2hjZvrpaiHBca5hS1a6o",
+      "price_impact": "0.043712274350892041",
+      "status": "executed",
+      "time": 1779950220.318573
+    }
+  ],
+  "metrics": {
+    "total_trades": 1,
+    "buys": 1,
+    "sells": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0,
+    "total_bought": 0.012,
+    "total_sold": 0,
+    "total_pnl": 0,
+    "total_fees_est": 5e-06,
+    "avg_win": 0,
+    "avg_loss": 0,
+    "profit_factor": 0,
+    "biggest_win": 0,
+    "biggest_loss": 0,
+    "max_drawdown": 0,
+    "roi_pct": 0.0,
+    "sharpe": 0,
+    "initial_capital": 0.012,
+    "pos_value": 0,
+    "avg_trade_size": 0.012,
+    "sol_price_usd": 145
+  },
+  "updated_at": 1779955318.8630242,
+  "updated_at_iso": "2026-05-28T04:01:58"
 }
