@@ -1,295 +1,603 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>HXBT — Hermes Trading Terminal</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧧 HERMES 财神 — Auto Trading Dashboard</title>
 <style>
+/* ========== CHINESE PROSPERITY THEME ========== */
 :root {
-  --bg: #0a0c10; --panel: #111318; --panel2: #161920;
-  --border: #1e222b; --border2: #252a35;
-  --text: #c8ccd4; --text2: #7a7f8a; --text3: #555a65;
-  --green: #00c853; --green2: #00e676; --green-bg: rgba(0,200,83,0.08);
-  --red: #ff1744; --red2: #ff5252; --red-bg: rgba(255,23,68,0.08);
-  --blue: #448aff; --accent: #ffab00; --cyan: #00bcd4;
-  --buy: #00c853; --sell: #ff1744;
-  --font: 'SF Mono','JetBrains Mono','Fira Code','Consolas',monospace;
-  --radius: 4px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:var(--font); background:var(--bg); color:var(--text);
-  font-size:11px; line-height:1.5; min-height:100vh;
-  -webkit-font-smoothing:antialiased;
+  --bg: #1a0a0a;
+  --gold: #FFD700;
+  --gold-light: #FFED4A;
+  --red: #DC143C;
+  --red-dark: #8B0000;
+  --red-bright: #FF2400;
+  --jade: #00A86B;
+  --panel-bg: #1a1111;
+  --border: #8B0000;
+  --text: #FFE4B5;
+  --text-dim: #B8860B;
+  --profit: #00FF88;
+  --loss: #FF4444;
 }
 
-/* Top Bar */
-.topbar{
-  background:var(--panel); border-bottom:1px solid var(--border);
-  padding:6px 12px; display:flex; align-items:center; gap:12px;
-  position:sticky; top:0; z-index:10; flex-wrap:wrap;
-}
-.topbar-logo{font-weight:900;font-size:13px;color:var(--accent);letter-spacing:-0.5px}
-.topbar-sep{width:1px;height:16px;background:var(--border2)}
-.topbar-item{display:flex;flex-direction:column;min-width:60px}
-.topbar-label{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
-.topbar-val{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
-.topbar-val.g{color:var(--green)} .topbar-val.r{color:var(--red)}
-.topbar-status{font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:1px}
-.status-live{background:rgba(0,200,83,0.15);color:var(--green);border:1px solid rgba(0,200,83,0.25)}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-.container{max-width:560px;margin:0 auto;padding:8px}
-
-/* Section */
-.section{margin-bottom:8px}
-.section-hdr{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 10px;background:var(--panel);border:1px solid var(--border);
-  border-radius:var(--radius) var(--radius) 0 0;font-size:9px;
-  text-transform:uppercase;letter-spacing:2px;color:var(--text2);
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Courier New', 'Noto Sans Thai', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(220,20,60,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(255,215,0,0.08) 0%, transparent 50%);
 }
 
-/* Blotter Table */
-.blotter{width:100%;border-collapse:collapse;font-size:10px}
-.blotter th{
-  background:var(--panel);color:var(--text2);font-weight:600;
-  padding:6px 8px;text-align:left;font-size:8px;text-transform:uppercase;
-  letter-spacing:1px;border-bottom:1px solid var(--border2);
-  white-space:nowrap;
+/* ========== HEADER ========== */
+.header {
+  background: linear-gradient(180deg, #2d0000 0%, #1a0a0a 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 12px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-.blotter td{
-  padding:5px 8px;border-bottom:1px solid rgba(255,255,255,0.02);
-  font-variant-numeric:tabular-nums;white-space:nowrap;
-}
-.blotter tr:hover td{background:rgba(255,255,255,0.02)}
-.blotter .buy-row td:first-child{color:var(--buy)}
-.blotter .sell-row td:first-child{color:var(--sell)}
-.pnl-pos{color:var(--green)} .pnl-neg{color:var(--red)}
-.tx-link{color:var(--blue);text-decoration:none;font-size:9px}
-.tx-link:hover{text-decoration:underline}
 
-/* Metrics Grid */
-.metrics-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--border);border:1px solid var(--border);
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,215,0,0.03) 40px, rgba(255,215,0,0.03) 41px);
 }
-.metric-box{
-  background:var(--panel2);padding:8px 6px;text-align:center;
+
+.header h1 {
+  font-size: 1.4em;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255,215,0,0.5), 0 0 40px rgba(255,0,0,0.3);
+  letter-spacing: 4px;
+  position: relative;
+  z-index: 1;
 }
-.metric-val{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
-.metric-lbl{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-/* Summary Cards */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
-.card{
-  background:var(--panel2);padding:10px;
+.header .subtitle {
+  font-size: 0.7em;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
 }
-.card-val{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
-.card-lbl{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
 
-/* Chart */
-.chart-wrap{position:relative;height:180px;background:var(--panel2);border:1px solid var(--border);padding:8px}
-
-/* Position */
-.pos-row{
-  display:flex;align-items:center;gap:10px;padding:8px 10px;
-  background:var(--panel2);border:1px solid var(--border);margin-bottom:2px;
+.lanterns {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
-.pos-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.pos-info{flex:1}
-.pos-sym{font-weight:700;font-size:12px}
-.pos-meta{font-size:9px;color:var(--text3)}
-.pos-entry{text-align:right;font-size:10px}
 
-/* Footer */
-.ftr{text-align:center;padding:12px;color:var(--text3);font-size:9px;letter-spacing:1px}
-
-/* Mobile */
-@media(max-width:400px){
-  .blotter{font-size:9px} .blotter td,.blotter th{padding:4px 5px}
-  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+.lantern {
+  position: absolute;
+  font-size: 1.8em;
+  animation: swing 3s ease-in-out infinite;
 }
+
+.lantern:nth-child(1) { left: 5%; top: -5px; animation-delay: 0s; }
+.lantern:nth-child(2) { right: 5%; top: -5px; animation-delay: 1.5s; }
+
+@keyframes swing {
+  0%,100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* ========== LUCKY CHARMS BAR ========== */
+.charms {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 8px;
+  font-size: 0.75em;
+  color: var(--gold);
+  background: rgba(139,0,0,0.3);
+  border-bottom: 1px solid var(--border);
+}
+
+.charm {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========== SCOREBOARD ========== */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 8px;
+  background: var(--panel-bg);
+  border-bottom: 2px solid var(--gold);
+}
+
+.metric {
+  background: rgba(139,0,0,0.2);
+  border: 1px solid var(--border);
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.metric .label {
+  font-size: 0.6em;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.metric .value {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(255,215,0,0.3);
+}
+
+.metric .sub {
+  font-size: 0.6em;
+  color: var(--text-dim);
+}
+
+/* ========== POSITIONS ========== */
+.section-title {
+  padding: 10px 16px;
+  font-size: 0.75em;
+  color: var(--gold);
+  letter-spacing: 3px;
+  background: rgba(139,0,0,0.2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.position-card {
+  border-bottom: 1px solid rgba(139,0,0,0.3);
+  padding: 12px 16px;
+  background: var(--panel-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.position-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--gold);
+}
+
+.pos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pos-name {
+  font-weight: bold;
+  font-size: 0.85em;
+  color: var(--gold);
+}
+
+.pos-symbol {
+  font-size: 0.6em;
+  color: var(--text-dim);
+  background: rgba(255,215,0,0.1);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.pos-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  font-size: 0.65em;
+}
+
+.pos-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pos-detail .k { color: var(--text-dim); }
+.pos-detail .v { color: var(--text); }
+
+.pos-pnl {
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 4px 0;
+  text-align: right;
+}
+
+.pnl-positive { color: var(--profit); }
+.pnl-negative { color: var(--loss); }
+
+/* ========== TRADE LOG ========== */
+.trade-item {
+  display: grid;
+  grid-template-columns: 35px 1fr 70px;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(139,0,0,0.15);
+  font-size: 0.65em;
+  align-items: center;
+}
+
+.trade-type {
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+.type-buy { background: rgba(0,255,136,0.15); color: var(--profit); }
+.type-sell { background: rgba(255,68,68,0.15); color: var(--loss); }
+
+.trade-info .name { color: var(--text); }
+.trade-info .meta { color: var(--text-dim); font-size: 0.85em; }
+
+.trade-pnl {
+  text-align: right;
+  font-weight: bold;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.6em;
+  color: var(--text-dim);
+  border-top: 2px solid var(--gold);
+  background: linear-gradient(0deg, #2d0000 0%, #1a0a0a 100%);
+}
+
+.footer .blessing {
+  font-size: 1.5em;
+  color: var(--gold);
+  text-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+
+/* ========== NO DATA ========== */
+.no-data {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-dim);
+  font-size: 0.8em;
+}
+
+.no-data .icon { font-size: 3em; margin-bottom: 8px; }
+
+/* ========== GLOWING DIVIDER ========== */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 16px;
+  opacity: 0.5;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (min-width: 768px) {
+  body { max-width: 600px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+}
+
+/* ========== BLINK ANIMATION ========== */
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+.blink { animation: blink 2s infinite; }
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
 
-<div class="topbar" id="topbar">
-  <span class="topbar-logo">HXBT</span>
-  <span class="topbar-sep"></span>
-  <div class="topbar-item">
-    <span class="topbar-label">BALANCE</span>
-    <span class="topbar-val" id="tb-bal">—</span>
+<!-- HEADER -->
+<div class="header">
+  <div class="lanterns">
+    <span class="lantern">🏮</span>
+    <span class="lantern">🏮</span>
   </div>
-  <div class="topbar-item">
-    <span class="topbar-label">PnL</span>
-    <span class="topbar-val" id="tb-pnl">—</span>
-  </div>
-  <div class="topbar-item">
-    <span class="topbar-label">ROI</span>
-    <span class="topbar-val" id="tb-roi">—</span>
-  </div>
-  <span class="topbar-sep"></span>
-  <span class="topbar-status status-live" id="tb-status">● LIVE</span>
-  <span style="font-size:9px;color:var(--text3);margin-left:auto" id="tb-time">—</span>
+  <h1>🧧 HERMES 财神 🧧</h1>
+  <div class="subtitle">💰 恭喜发财 · 招财进宝 · 财源广进 💰</div>
 </div>
 
-<div class="container" id="app"><div style="text-align:center;padding:60px;color:var(--text3)">LOADING...</div></div>
+<!-- LUCKY CHARMS -->
+<div class="charms">
+  <span class="charm">🧧 福</span>
+  <span class="charm">🐉 龙</span>
+  <span class="charm">💰 财</span>
+  <span class="charm">🏮 喜</span>
+  <span class="charm">🎋 竹</span>
+</div>
+
+<!-- SCOREBOARD -->
+<div class="scoreboard" id="scoreboard">
+  <div class="metric">
+    <div class="label">💰 余额 BALANCE</div>
+    <div class="value" id="balSOL">--</div>
+    <div class="sub" id="balUSD">--</div>
+  </div>
+  <div class="metric">
+    <div class="label">📊 盈亏 PnL</div>
+    <div class="value" id="totalPnL">--</div>
+    <div class="sub" id="pnlUSD">--</div>
+  </div>
+  <div class="metric">
+    <div class="label">⚡ 胜率 WIN%</div>
+    <div class="value" id="winRate">--</div>
+    <div class="sub" id="winCount">--</div>
+  </div>
+</div>
+
+<!-- POSITIONS -->
+<div class="section-title">
+  <span>🔫 持仓 POSITIONS</span>
+  <span id="posCount" style="font-size:0.8em">0</span>
+</div>
+<div id="positions">
+  <div class="no-data">
+    <div class="icon">🧘</div>
+    <div>等待机会... Waiting for snipe...</div>
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<!-- TRADE HISTORY -->
+<div class="section-title">
+  <span>📜 交易记录 TRADE LOG</span>
+  <span id="tradeCount" style="font-size:0.8em">0</span>
+</div>
+<div id="trades">
+  <div class="no-data">
+    <div class="icon">🔮</div>
+    <div>暂无交易... No trades yet...</div>
+  </div>
+</div>
+
+<div class="gold-divider"></div>
+
+<!-- PERFORMANCE -->
+<div class="section-title">📈 业绩 PERFORMANCE</div>
+<div style="padding:12px 16px; font-size:0.65em; display:grid; grid-template-columns:1fr 1fr; gap:8px;" id="perf">
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="blessing">🙏 发财 · 发财 · 发财 🙏</div>
+  <div style="margin-top:4px">HERMES 财神 Auto-Trader v3.0</div>
+  <div style="margin-top:4px; color:var(--gold); font-size:0.9em">สาธุ ขอให้รวยๆ เฮงๆ 🧧</div>
+  <div style="margin-top:6px; font-size:0.7em" id="updateTime"></div>
+</div>
 
 <script>
-const API = 'https://raw.githubusercontent.com/kiwizhk-gif/kiwizhk-gif.github.io/main/dash_data.json';
-let chart = null;
+// ========== DATA FETCHER ==========
+const STATE_URL = '../solana_bot/autotrade_state.json';
+const TRADES_URL = '../solana_bot/autotrade_trades.jsonl';
+const SOL_PRICE_URL = 'https://api.jup.ag/price/v2?ids=So11111111111111111111111111111111111111112';
 
-async function fetchData() {
-  try { const r = await fetch(API+'?t='+Date.now()); if(!r.ok) throw new Error(); return await r.json(); }
-  catch(e) { return null; }
+let solPrice = 0;
+let lastState = null;
+let lastTrades = [];
+
+async function fetchJSON(url) {
+  try {
+    const resp = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+    return await resp.json();
+  } catch(e) { return null; }
 }
 
-function f(n,d=4) { return n!=null ? Number(n).toFixed(d) : '—'; }
-function pnlClass(v) { return v>0?'g':'r'; }
+async function fetchJSONL(url) {
+  try {
+    const resp = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+    const text = await resp.text();
+    return text.trim().split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
+  } catch(e) { return []; }
+}
 
-function render(data) {
-  if(!data) { document.getElementById('app').innerHTML='<div style="text-align:center;padding:60px;color:var(--red)">CONNECTION LOST</div>'; return; }
+async function fetchSolPrice() {
+  try {
+    const resp = await fetch(SOL_PRICE_URL, { cache: 'no-store' });
+    const data = await resp.json();
+    solPrice = data?.data?.['So11111111111111111111111111111111111111112']?.price || 0;
+  } catch(e) {}
+}
 
-  const m = data.metrics || {};
-  const trades = data.trades || [];
-  const txs = data.tx_history || [];
-  const pos = data.positions || [];
-  const solPrice = m.sol_price_usd || 145;
-  const bal = data.balance || 0;
-  const pnl = data.pnl || 0;
+// ========== RENDER ==========
+function fmtUSD(sol) { return solPrice ? '$' + (sol * solPrice).toFixed(2) : '--'; }
+function fmtSOL(v) { return (v||0).toFixed(6) + ' SOL'; }
+function fmtPnL(v) {
+  if (!v && v !== 0) return '--';
+  const sign = v >= 0 ? '+' : '';
+  return sign + v.toFixed(6) + ' SOL';
+}
 
-  // Topbar
-  document.getElementById('tb-bal').textContent = f(bal,4) + ' SOL';
-  document.getElementById('tb-pnl').textContent = (pnl>=0?'+':'') + f(pnl,4) + ' SOL';
-  document.getElementById('tb-pnl').className = 'topbar-val ' + pnlClass(pnl);
-  document.getElementById('tb-roi').textContent = (m.roi_pct>=0?'+':'') + f(m.roi_pct,1) + '%';
-  document.getElementById('tb-roi').className = 'topbar-val ' + pnlClass(m.roi_pct);
-  document.getElementById('tb-time').textContent = new Date().toLocaleTimeString('en-GB',{hour12:false});
+function renderScoreboard(state) {
+  const bal = state.cashSol || 0;
+  const pnl = state.totalPnl || 0;
+  const wins = state.wins || 0;
+  const losses = state.losses || 0;
+  const total = wins + losses;
+  const wr = total > 0 ? ((wins/total)*100).toFixed(0) + '%' : '--';
+  
+  document.getElementById('balSOL').textContent = fmtSOL(bal);
+  document.getElementById('balUSD').textContent = fmtUSD(bal);
+  
+  const pnlEl = document.getElementById('totalPnL');
+  pnlEl.textContent = fmtPnL(pnl);
+  pnlEl.className = 'value ' + (pnl >= 0 ? 'pnl-positive' : 'pnl-negative');
+  
+  document.getElementById('pnlUSD').textContent = fmtUSD(pnl);
+  document.getElementById('winRate').textContent = wr;
+  document.getElementById('winCount').textContent = wins + 'W / ' + losses + 'L';
+  document.getElementById('posCount').textContent = (state.positions||[]).length + ' POS';
+}
 
-  // Chart data
-  let cum=0; const cLbls=[], cData=[];
-  trades.forEach(t=>{if(t.type==='SELL'||t.type==='STOP'){cum+=t.pnl||0;cLbls.push(t.symbol);cData.push(cum.toFixed(6));}});
-
-  document.getElementById('app').innerHTML = `
-    <!-- Key Metrics -->
-    <div class="section">
-      <div class="section-hdr"><span>KEY METRICS</span><span>${data.updated_at_iso||''}</span></div>
-      <div class="metrics-grid">
-        <div class="metric-box"><div class="metric-val">${f(bal,4)}</div><div class="metric-lbl">Balance SOL</div></div>
-        <div class="metric-box"><div class="metric-val ${pnlClass(pnl)}">${pnl>=0?'+':''}${f(pnl,4)}</div><div class="metric-lbl">Total PnL</div></div>
-        <div class="metric-box"><div class="metric-val ${pnlClass(m.roi_pct)}">${m.roi_pct>=0?'+':''}${f(m.roi_pct,1)}%</div><div class="metric-lbl">ROI</div></div>
-        <div class="metric-box"><div class="metric-val">${m.win_rate||0}%</div><div class="metric-lbl">Win Rate</div></div>
-        <div class="metric-box"><div class="metric-val ${pnlClass(m.profit_factor-1)}">${f(m.profit_factor,2)}x</div><div class="metric-lbl">Profit Factor</div></div>
-        <div class="metric-box"><div class="metric-val">${f(m.sharpe,2)}</div><div class="metric-lbl">Sharpe Ratio</div></div>
-      </div>
-    </div>
-
-    <!-- Summary -->
-    <div class="section">
-      <div class="section-hdr"><span>PERFORMANCE SUMMARY</span></div>
-      <div class="cards">
-        <div class="card"><div class="card-val">${f(bal*145,2)}</div><div class="card-lbl">USD Value</div></div>
-        <div class="card"><div class="card-val">${m.total_trades||0}</div><div class="card-lbl">Total Trades</div></div>
-        <div class="card"><div class="card-val g">${m.wins||0}</div><div class="card-lbl">Wins</div></div>
-        <div class="card"><div class="card-val r">${m.losses||0}</div><div class="card-lbl">Losses</div></div>
-        <div class="card"><div class="card-val g">+${f(m.avg_win)}</div><div class="card-lbl">Avg Win SOL</div></div>
-        <div class="card"><div class="card-val r">${f(m.avg_loss)}</div><div class="card-lbl">Avg Loss SOL</div></div>
-        <div class="card"><div class="card-val g">+${f(m.biggest_win)}</div><div class="card-lbl">Best Trade</div></div>
-        <div class="card"><div class="card-val r">${f(m.biggest_loss)}</div><div class="card-lbl">Worst Trade</div></div>
-      </div>
-    </div>
-
-    <!-- Chart -->
-    ${cData.length>=2?`
-    <div class="section">
-      <div class="section-hdr"><span>CUMULATIVE P&L</span><span>SOL</span></div>
-      <div class="chart-wrap"><canvas id="pnlChart"></canvas></div>
-    </div>`:''}
-
-    ${cData.length>=2?`
-    <div class="section">
-      <div class="section-hdr"><span>P&L DISTRIBUTION</span></div>
-      <div class="cards">
-        <div class="card"><div class="card-val">${f(m.avg_win/abs(m.avg_loss||0.0001),2)}x</div><div class="card-lbl">Win/Loss Ratio</div></div>
-        <div class="card"><div class="card-val r">${f(m.max_drawdown)}</div><div class="card-lbl">Max Drawdown SOL</div></div>
-        <div class="card"><div class="card-val">${f(m.total_bought)}</div><div class="card-lbl">Total Bought SOL</div></div>
-        <div class="card"><div class="card-val">${f(m.total_sold)}</div><div class="card-lbl">Total Sold SOL</div></div>
-      </div>
-    </div>`:''}
-
-    <!-- Positions -->
-    ${pos.length>0?`
-    <div class="section">
-      <div class="section-hdr"><span>OPEN POSITIONS</span><span>${pos.length} ACTIVE</span></div>
-      ${pos.map(p=>`
-        <div class="pos-row">
-          <div class="pos-dot"></div>
-          <div class="pos-info">
-            <div class="pos-sym">$${p.symbol||'???'}</div>
-            <div class="pos-meta">MCAP $${(p.mcap||0).toLocaleString()} · Entry ${f(p.entry_sol)} SOL · Age ${(p.age||0).toFixed(0)}s</div>
-          </div>
-          <div class="pos-entry">${f(p.entry_sol)} SOL</div>
+function renderPositions(state) {
+  const container = document.getElementById('positions');
+  const positions = state.positions || [];
+  
+  if (positions.length === 0) {
+    container.innerHTML = '<div class="no-data"><div class="icon">🧘</div><div>等待机会... Waiting for snipe...</div></div>';
+    return;
+  }
+  
+  container.innerHTML = positions.map((p, i) => {
+    const entry = p.entrySol || 0;
+    const current = p.currentValue || entry;
+    const pnl = current - entry;
+    const pnlPct = entry > 0 ? ((pnl/entry)*100).toFixed(1) : '0';
+    const pnlClass = pnl >= 0 ? 'pnl-positive' : 'pnl-negative';
+    const holdMin = Math.floor((Date.now() - (p.buyTime || Date.now())) / 60000);
+    const name = (p.name || p.symbol || '???').slice(0, 25);
+    
+    return `
+      <div class="position-card">
+        <div class="pos-header">
+          <span class="pos-name">${i+1}. ${name}</span>
+          <span class="pos-symbol">${p.symbol || '???'}</span>
         </div>
-      `).join('')}
-    </div>`:''}
-
-    <!-- Trade Blotter -->
-    <div class="section">
-      <div class="section-hdr"><span>TRADE BLOTTER</span><span>${trades.length} TX</span></div>
-      <div style="overflow-x:auto">
-        <table class="blotter">
-          <thead><tr><th>T</th><th>TIME</th><th>TOKEN</th><th>AMOUNT</th><th>PnL</th><th>PnL%</th><th>SLIPPAGE</th><th>TX</th></tr></thead>
-          <tbody>
-            ${trades.slice().reverse().map(t=>{
-              const pnl = t.pnl;
-              const pnlPct = pnl!=null && t.sol>0 ? ((pnl/t.sol)*100) : null;
-              const rowClass = t.type==='BUY'?'buy-row':(pnl>=0?'sell-row':'sell-row');
-              return `<tr class="${rowClass}">
-                <td>${t.type==='BUY'?'B':t.type==='SELL'?'S':'X'}</td>
-                <td>${t.time_iso||'—'}</td>
-                <td><b>$${t.symbol||'???'}</b></td>
-                <td>${f(t.sol)}</td>
-                <td class="${pnl>=0?'pnl-pos':'pnl-neg'}">${pnl!=null?(pnl>=0?'+':'')+f(pnl):'—'}</td>
-                <td class="${pnlPct>=0?'pnl-pos':'pnl-neg'}">${pnlPct!=null?(pnlPct>=0?'+':'')+f(pnlPct,1)+'%':'—'}</td>
-                <td>${t.price_impact?f(parseFloat(t.price_impact)*100,2)+'%':'—'}</td>
-                <td><a class="tx-link" href="https://solscan.io/tx/${t.tx_full||''}" target="_blank">${(t.tx_full||'').slice(0,8)}..</a></td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="ftr">
-      HXBT TERMINAL v1.0 · AUTO-REFRESH 30S · <span id="ftr-time">—</span> ICT
-    </div>
-  `;
-
-  // Chart
-  if(cData.length>=2) setTimeout(()=>{
-    const cvs=document.getElementById('pnlChart'); if(!cvs) return;
-    if(chart) chart.destroy();
-    const last=cData[cData.length-1];
-    chart=new Chart(cvs,{
-      type:'line',data:{labels:cLbls,datasets:[{
-        data:cData,borderColor:last>=0?'#00c853':'#ff1744',
-        backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,180);g.addColorStop(0,last>=0?'rgba(0,200,83,0.2)':'rgba(255,23,68,0.2)');g.addColorStop(1,'transparent');return g},
-        borderWidth:1.5,fill:true,tension:0.3,pointRadius:2,pointBackgroundColor:last>=0?'#00c853':'#ff1744'
-      }]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#555',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#555',font:{size:8},callback:v=>v+' SOL'}}}
-      }
-    });
-  },200);
-
-  // Footer clock
-  setInterval(()=>{const el=document.getElementById('ftr-time');if(el)el.textContent=new Date().toLocaleTimeString('en-GB',{hour12:false});},1000);
+        <div class="pos-details">
+          <div class="pos-detail"><span class="k">买入 Entry</span><span class="v">${fmtSOL(entry)}</span></div>
+          <div class="pos-detail"><span class="k">当前 Now</span><span class="v">${fmtSOL(current)}</span></div>
+          <div class="pos-detail"><span class="k">数量 Amt</span><span class="v">${(p.entryTokens||0).toExponential(2)}</span></div>
+          <div class="pos-detail"><span class="k">持有 Hold</span><span class="v">${holdMin} min</span></div>
+        </div>
+        <div class="pos-pnl ${pnlClass}">
+          ${pnl >= 0 ? '📈' : '📉'} ${fmtPnL(pnl)} (${pnlPct}%)
+        </div>
+        ${p.buyTx ? `<div style="font-size:0.55em;color:var(--text-dim);margin-top:4px;">TX: <a href="https://solscan.io/tx/${p.buyTx}" target="_blank" style="color:var(--gold)">${p.buyTx.slice(0,16)}...</a></div>` : ''}
+      </div>`;
+  }).join('');
 }
 
-fetchData().then(render);
-setInterval(async()=>{const d=await fetchData();if(d)render(d);},30000);
+function renderTrades(trades) {
+  const container = document.getElementById('trades');
+  document.getElementById('tradeCount').textContent = trades.length + ' TX';
+  
+  if (trades.length === 0) {
+    container.innerHTML = '<div class="no-data"><div class="icon">🔮</div><div>暂无交易... No trades yet...</div></div>';
+    return;
+  }
+  
+  // Show last 30, newest first
+  const recent = trades.slice(-30).reverse();
+  
+  container.innerHTML = recent.map(t => {
+    const typeClass = t.type === 'BUY' ? 'type-buy' : 'type-sell';
+    const emoji = t.type === 'BUY' ? '🟢' : '🔴';
+    const name = (t.name || t.symbol || '???').slice(0, 20);
+    const pnl = t.pnl;
+    const pnlClass = pnl > 0 ? 'pnl-positive' : pnl < 0 ? 'pnl-negative' : '';
+    const pnlStr = pnl !== undefined && pnl !== null ? (pnl >= 0 ? '+' : '') + pnl.toFixed(6) + ' SOL' : '';
+    
+    return `
+      <div class="trade-item">
+        <span class="trade-type ${typeClass}">${t.type}</span>
+        <div class="trade-info">
+          <div class="name">${emoji} ${name}</div>
+          <div class="meta">${(t.time||'').slice(11,19) || ''} · ${t.sol.toFixed(4)} SOL</div>
+        </div>
+        <div class="trade-pnl ${pnlClass}">${pnlStr}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderPerformance(state, trades) {
+  const container = document.getElementById('perf');
+  const completed = trades.filter(t => t.type === 'SELL' && t.pnl != null);
+  const buyTrades = trades.filter(t => t.type === 'BUY').length;
+  const sellTrades = completed.length;
+  
+  let totalPnL = state.totalPnl || 0;
+  let bestTrade = 0, worstTrade = 0;
+  completed.forEach(t => {
+    if (t.pnl > bestTrade) bestTrade = t.pnl;
+    if (t.pnl < worstTrade) worstTrade = t.pnl;
+  });
+  
+  const wins = state.wins || 0;
+  const losses = state.losses || 0;
+  const winRate = (wins + losses) > 0 ? ((wins/(wins+losses))*100).toFixed(0) + '%' : '--';
+  
+  // Profit factor
+  const totalWins = completed.filter(t => t.pnl > 0).reduce((s,t) => s + t.pnl, 0);
+  const totalLosses = Math.abs(completed.filter(t => t.pnl < 0).reduce((s,t) => s + t.pnl, 0));
+  const pf = totalLosses > 0 ? (totalWins / totalLosses).toFixed(2) : '--';
+  
+  const items = [
+    ['总交易 Total TX', buyTrades],
+    ['已完成 Completed', sellTrades],
+    ['最佳 Best', fmtPnL(bestTrade)],
+    ['最差 Worst', fmtPnL(worstTrade)],
+    ['胜率 Win Rate', winRate],
+    ['盈亏比 PFactor', pf],
+    ['系统状态 Status', state.running ? '🟢 RUNNING' : '🔴 STOPPED'],
+    ['启动时间 Uptime', state.startTime ? Math.floor((Date.now()-state.startTime)/60000) + ' min' : '--'],
+  ];
+  
+  container.innerHTML = items.map(([k,v]) => `
+    <div style="display:flex;justify-content:space-between;">
+      <span style="color:var(--text-dim)">${k}</span>
+      <span style="color:var(--gold)">${v}</span>
+    </div>`).join('');
+}
+
+// ========== MAIN LOOP ==========
+async function refresh() {
+  await fetchSolPrice();
+  
+  const state = await fetchJSON(STATE_URL);
+  const trades = await fetchJSONL(TRADES_URL);
+  
+  if (state) {
+    // Try to get current values for positions via quote API
+    if (state.positions && state.positions.length > 0) {
+      for (const pos of state.positions) {
+        try {
+          const qUrl = `https://api.jup.ag/swap/v1/quote?inputMint=${pos.mint}&outputMint=So11111111111111111111111111111111111111112&amount=${pos.entryTokens}&slippageBps=1000`;
+          const qResp = await fetch(qUrl, { cache: 'no-store' });
+          if (qResp.ok) {
+            const qData = await qResp.json();
+            pos.currentValue = parseInt(qData.outAmount || '0') / 1e9;
+          }
+        } catch(e) {}
+      }
+    }
+    
+    renderScoreboard(state);
+    renderPositions(state);
+    renderPerformance(state, trades);
+    lastState = state;
+  }
+  
+  if (trades.length > 0) {
+    renderTrades(trades);
+    lastTrades = trades;
+  }
+  
+  document.getElementById('updateTime').textContent = 
+    '🕐 ' + new Date().toLocaleTimeString('th-TH') + ' · Auto-refresh 5s';
+}
+
+// Initial load
+refresh();
+
+// Refresh every 5 seconds
+setInterval(refresh, 5000);
+
+// Also refresh SOL price every 30s
+setInterval(fetchSolPrice, 30000);
 </script>
 </body>
 </html>
