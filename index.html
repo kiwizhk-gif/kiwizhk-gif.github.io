@@ -1,428 +1,427 @@
-     1|<!DOCTYPE html>
-     2|<html lang="en">
-     3|<head>
-     4|<meta charset="UTF-8">
-     5|<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-     6|<title>J.A.R.V.I.S. — Trading Intelligence</title>
-     7|<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-     8|<style>
-     9|:root {
-    10|  --bg: #000a14;
-    11|  --surface: rgba(0,20,50,0.85);
-    12|  --surface2: rgba(0,30,70,0.7);
-    13|  --border: rgba(0,180,255,0.15);
-    14|  --glow: rgba(0,200,255,0.4);
-    15|  --cyan: #00d4ff;
-    16|  --cyan2: #00a8cc;
-    17|  --blue: #0066ff;
-    18|  --green: #00ff88;
-    19|  --red: #ff3366;
-    20|  --gold: #ffcc00;
-    21|  --white: #e0f0ff;
-    22|  --text: #a0c8e0;
-    23|  --dim: #406080;
-    24|}
-    25|* { margin: 0; padding: 0; box-sizing: border-box; }
-    26|body {
-    27|  font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-    28|  background: var(--bg);
-    29|  color: var(--text);
-    30|  min-height: 100vh;
-    31|  overflow-x: hidden;
-    32|  -webkit-font-smoothing: antialiased;
-    33|  -webkit-tap-highlight-color: transparent;
-    34|}
-    35|
-    36|/* Particle BG */
-    37|canvas#particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    38|
-    39|/* Scan line */
-    40|.scanline {
-    41|  position: fixed; inset: 0; z-index: 999; pointer-events: none;
-    42|  background: linear-gradient(transparent 50%, rgba(0,180,255,0.02) 50%);
-    43|  background-size: 100% 4px;
-    44|}
-    45|
-    46|/* Main */
-    47|.app { position: relative; z-index: 1; max-width: 500px; margin: 0 auto; padding: 10px; }
-    48|
-    49|/* JARVIS Orb */
-    50|.orb-section {
-    51|  display: flex; flex-direction: column; align-items: center; padding: 16px 0 10px;
-    52|}
-    53|.orb {
-    54|  width: 100px; height: 100px; border-radius: 50%;
-    55|  position: relative;
-    56|  background: radial-gradient(circle at 35% 35%, rgba(0,200,255,0.3), rgba(0,50,150,0.1) 60%, transparent);
-    57|  border: 1px solid rgba(0,200,255,0.3);
-    58|  box-shadow: 0 0 40px rgba(0,180,255,0.2), inset 0 0 30px rgba(0,150,255,0.1);
-    59|  animation: orbPulse 3s ease-in-out infinite;
-    60|  display: flex; align-items: center; justify-content: center;
-    61|  margin-bottom: 6px;
-    62|}
-    63|.orb-inner {
-    64|  width: 50px; height: 50px; border-radius: 50%;
-    65|  background: radial-gradient(circle, rgba(0,220,255,0.6), rgba(0,100,200,0.2));
-    66|  box-shadow: 0 0 20px var(--glow);
-    67|  animation: innerGlow 2s ease-in-out infinite;
-    68|}
-    69|@keyframes orbPulse {
-    70|  0%,100% { box-shadow: 0 0 40px rgba(0,180,255,0.2), inset 0 0 30px rgba(0,150,255,0.1); }
-    71|  50% { box-shadow: 0 0 60px rgba(0,200,255,0.35), inset 0 0 40px rgba(0,180,255,0.15); }
-    72|}
-    73|@keyframes innerGlow {
-    74|  0%,100% { transform: scale(1); opacity: 0.8; }
-    75|  50% { transform: scale(1.15); opacity: 1; }
-    76|}
-    77|.orb-ring {
-    78|  position: absolute; inset: -8px; border-radius: 50%;
-    79|  border: 1px solid transparent;
-    80|  border-top-color: rgba(0,200,255,0.4);
-    81|  animation: spin 4s linear infinite;
-    82|}
-    83|.orb-ring:nth-child(3) { inset: -16px; animation-duration: 6s; border-top-color: rgba(0,150,255,0.2); }
-    84|@keyframes spin { to { transform: rotate(360deg); } }
-    85|
-    86|.jarvis-label {
-    87|  font-size: 11px; letter-spacing: 4px; color: var(--cyan);
-    88|  text-transform: uppercase; margin-bottom: 2px; opacity: 0.7;
-    89|}
-    90|.jarvis-greeting {
-    91|  font-size: 12px; color: var(--cyan2); letter-spacing: 2px;
-    92|  animation: fadeText 3s ease-in-out infinite;
-    93|}
-    94|@keyframes fadeText { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
-    95|
-    96|/* Panel */
-    97|.panel {
-    98|  background: var(--surface);
-    99|  border: 1px solid var(--border);
-   100|  border-radius: 8px;
-   101|  padding: 14px;
-   102|  margin-bottom: 10px;
-   103|  position: relative;
-   104|  backdrop-filter: blur(20px);
-   105|}
-   106|.panel::before {
-   107|  content: ''; position: absolute; top: 0; left: 16px; right: 16px; height: 1px;
-   108|  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-   109|  opacity: 0.5;
-   110|}
-   111|.panel-header {
-   112|  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-   113|}
-   114|.panel-title {
-   115|  font-size: 10px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase;
-   116|  display: flex; align-items: center; gap: 8px;
-   117|}
-   118|.panel-title::before { content: '◆'; font-size: 6px; }
-   119|.panel-badge {
-   120|  font-size: 9px; padding: 2px 8px; border: 1px solid rgba(0,200,255,0.2);
-   121|  border-radius: 2px; color: var(--cyan2); letter-spacing: 1px;
-   122|}
-   123|
-   124|/* Hero Balance */
-   125|.hero {
-   126|  text-align: center; padding: 6px 0;
-   127|}
-   128|.balance-num {
-   129|  font-size: 52px; font-weight: 300; letter-spacing: -2px;
-   130|  color: var(--cyan);
-   131|  text-shadow: 0 0 30px rgba(0,200,255,0.3);
-   132|  font-variant-numeric: tabular-nums;
-   133|}
-   134|.balance-unit {
-   135|  font-size: 13px; color: var(--dim); letter-spacing: 3px; margin-top: 2px;
-   136|}
-   137|.pnl-hero {
-   138|  display: inline-flex; align-items: center; gap: 6px;
-   139|  font-size: 14px; padding: 4px 14px; margin-top: 6px;
-   140|  border: 1px solid; letter-spacing: 1px;
-   141|}
-   142|.pnl-up { color: var(--green); border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.05); }
-   143|.pnl-down { color: var(--red); border-color: rgba(255,51,102,0.3); background: rgba(255,51,102,0.05); }
-   144|
-   145|/* Gauges Row */
-   146|.gauges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
-   147|.gauge {
-   148|  text-align: center; padding: 10px 6px;
-   149|  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
-   150|}
-   151|.gauge-val { font-size: 22px; font-weight: 300; color: var(--cyan); }
-   152|.gauge-label { font-size: 9px; letter-spacing: 2px; color: var(--dim); margin-top: 3px; text-transform: uppercase; }
-   153|
-   154|/* Data Grid */
-   155|.data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-   156|.data-item {
-   157|  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
-   158|  padding: 10px; text-align: center;
-   159|}
-   160|.data-val { font-size: 18px; font-weight: 300; color: var(--cyan); }
-   161|.data-label { font-size: 8px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-top: 3px; }
-   162|.data-green { color: var(--green); }
-   163|.data-red { color: var(--red); }
-   164|.data-gold { color: var(--gold); }
-   165|
-   166|/* Chart */
-   167|.chart-box { position: relative; height: 160px; margin: 6px 0; }
-   168|.chart-box canvas { width: 100% !important; }
-   169|
-   170|/* Log lines */
-   171|.log-line {
-   172|  display: flex; align-items: flex-start; gap: 8px;
-   173|  padding: 6px 10px; font-size: 11px; border-bottom: 1px solid rgba(0,180,255,0.05);
-   174|  font-family: inherit;
-   175|}
-   176|.log-time { color: var(--dim); white-space: nowrap; font-size: 10px; }
-   177|.log-action { min-width: 32px; font-size: 11px; }
-   178|.log-buy { color: var(--cyan); }
-   179|.log-sell { color: var(--green); }
-   180|.log-stop { color: var(--red); }
-   181|.log-symbol { font-weight: 600; color: var(--cyan2); flex: 1; }
-   182|.log-amount { color: var(--text); text-align: right; white-space: nowrap; }
-   183|.log-pnl-pos { color: var(--green); }
-   184|.log-pnl-neg { color: var(--red); }
-   185|
-   186|/* Position card */
-   187|.pos-row {
-   188|  display: flex; align-items: center; gap: 10px;
-   189|  padding: 10px; background: var(--surface2); border: 1px solid var(--border);
-   190|  border-radius: 6px; margin-bottom: 6px;
-   191|}
-   192|.pos-dot {
-   193|  width: 10px; height: 10px; border-radius: 50%;
-   194|  background: var(--cyan); box-shadow: 0 0 8px var(--glow);
-   195|  flex-shrink: 0;
-   196|}
-   197|.pos-info { flex: 1; min-width: 0; }
-   198|.pos-name { font-size: 13px; color: var(--cyan); font-weight: 600; }
-   199|.pos-meta { font-size: 9px; color: var(--dim); letter-spacing: 1px; }
-   200|.pos-entry { font-size: 11px; color: var(--text); }
-   201|
-   202|/* Status bar */
-   203|.status-row {
-   204|  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
-   205|}
-   206|.status-dot {
-   207|  display: inline-flex; align-items: center; gap: 5px;
-   208|  font-size: 10px; letter-spacing: 2px; color: var(--green);
-   209|  text-transform: uppercase;
-   210|}
-   211|.status-dot::before {
-   212|  content: ''; width: 6px; height: 6px; border-radius: 50%;
-   213|  background: var(--green); box-shadow: 0 0 6px var(--green);
-   214|  animation: blink 1.5s infinite;
-   215|}
-   216|@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-   217|
-   218|/* Footer JARVIS */
-   219|.jarvis-footer {
-   220|  text-align: center; padding: 16px 0; font-size: 10px; color: var(--dim); letter-spacing: 2px;
-   221|}
-   222|.jarvis-footer span { color: var(--cyan2); }
-   223|
-   224|/* Responsive */
-   225|@media (max-width: 380px) {
-   226|  .balance-num { font-size: 40px; }
-   227|  .gauge-val { font-size: 18px; }
-   228|  .data-val { font-size: 16px; }
-   229|}
-   230|</style>
-   231|</head>
-   232|<body>
-   233|
-   234|<canvas id="particles"></canvas>
-   235|<div class="scanline"></div>
-   236|
-   237|<div class="app" id="app">
-   238|  <div style="text-align:center;padding:60px 0;color:var(--dim)">
-   239|    <div class="orb" style="margin:0 auto 20px"><div class="orb-inner"></div><div class="orb-ring"></div><div class="orb-ring"></div></div>
-   240|    <div style="letter-spacing:4px">INITIALIZING</div>
-   241|  </div>
-   242|</div>
-   243|
-   244|<script>
-   245|const API = 'https://raw.githubusercontent.com/kiwizhk-gif/kiwizhk-gif.github.io/main/dash_data.json';
-   246|
-   247|// Particle system
-   248|const canvas = document.getElementById('particles');
-   249|const ctx = canvas.getContext('2d');
-   250|let particles = [];
-   251|function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-   252|resize(); window.addEventListener('resize', resize);
-   253|class Particle {
-   254|  constructor() { this.reset(); this.y = Math.random() * canvas.height; }
-   255|  reset() { this.x = Math.random() * canvas.width; this.y = -5; this.vx = (Math.random()-0.5)*0.5; this.vy = 0.3 + Math.random()*0.7; this.size = Math.random()*1.5+0.5; this.opacity = Math.random()*0.5+0.2; }
-   256|  update() { this.x += this.vx; this.y += this.vy; if (this.y > canvas.height+5) this.reset(); if (this.x<0) this.x=canvas.width; if (this.x>canvas.width) this.x=0; }
-   257|  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(0,200,255,${this.opacity})`; ctx.fill(); }
-   258|}
-   259|for (let i=0; i<80; i++) particles.push(new Particle());
-   260|function animateParticles() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles); }
-   261|animateParticles();
-   262|
-   263|// Data
-   264|async function fetchData() {
-   265|  try { const r = await fetch(API+'?t='+Date.now()); if (!r.ok) throw new Error(); return await r.json(); }
-   266|  catch(e) { return null; }
-   267|}
-   268|
-   269|function f(n,d=4) { return n!=null?Number(n).toFixed(d):'—'; }
-   270|function fs(n) { return Number(n).toFixed(2); }
-   271|function timeAgo(ts) { const d=(Date.now()/1000)-ts; if(d<60) return Math.floor(d)+'s'; if(d<3600) return Math.floor(d/60)+'m'; return Math.floor(d/3600)+'h'; }
-   272|
-   273|let chart = null;
-   274|
-   275|function render(data) {
-   276|  const app = document.getElementById('app');
-   277|  if (!data) { app.innerHTML = '<div style="text-align:center;padding:60px"><div style="color:var(--red);letter-spacing:2px">CONNECTION LOST</div><div style="color:var(--dim);font-size:10px;margin-top:8px">Retrying in 30s...</div></div>'; return; }
-   278|
-   279|  const bal = data.balance || 0; const pnl = data.pnl || 0; const trades = data.trades || [];
-   280|  const pos = data.positions || []; const tokens = data.tokens_found || 0;
-   281|  const solPrice = 145;
-   282|
-   283|  let wins=0,losses=0,totalPnL=0,bigWin=0,bigLoss=0;
-   284|  trades.forEach(t=>{
-   285|    if(t.type==='SELL'){totalPnL+=t.pnl||0; if(t.pnl>0)wins++;else losses++; if(t.pnl>bigWin)bigWin=t.pnl; if(t.pnl<bigLoss)bigLoss=t.pnl;}
-   286|    if(t.type==='STOP'){totalPnL+=t.pnl||0;losses++; if(t.pnl<bigLoss)bigLoss=t.pnl;}
-   287|  });
-   288|  const totalTrades = wins+losses;
-   289|  const winRate = totalTrades>0?(wins/totalTrades*100):0;
-   290|
-   291|  // Chart data
-   292|  let cum=0; const cLabels=[],cData=[];
-   293|  trades.forEach(t=>{if(t.type==='SELL'||t.type==='STOP'){cum+=t.pnl||0; cLabels.push(t.symbol); cData.push(cum.toFixed(6));}});
-   294|
-   295|  const now = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
-   296|
-   297|  app.innerHTML = `
-   298|    <!-- Orb -->
-   299|    <div class="orb-section">
-   300|      <div style="font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:4px">J.A.R.V.I.S.</div>
-   301|      <div class="orb"><div class="orb-inner"></div><div class="orb-ring"></div><div class="orb-ring"></div></div>
-   302|      <div class="jarvis-greeting">At your service, sir. All systems operational.</div>
-   303|    </div>
-   304|
-   305|    <!-- Status -->
-   306|    <div class="status-row">
-   307|      <span class="status-dot">ONLINE</span>
-   308|      <span style="font-size:10px;color:var(--dim);letter-spacing:2px">${now} ICT</span>
-   309|      <span style="font-size:10px;color:var(--dim);letter-spacing:2px">🪙 ${tokens}</span>
-   310|    </div>
-   311|
-   312|    <!-- Balance -->
-   313|    <div class="panel">
-   314|      <div class="panel-header">
-   315|        <span class="panel-title">PORTFOLIO</span>
-   316|        <span class="panel-badge">SOL</span>
-   317|      </div>
-   318|      <div class="hero">
-   319|        <div class="balance-num">${fs(bal)}</div>
-   320|        <div class="balance-unit">SOL · $${fs(bal*solPrice)} USD</div>
-   321|        <div class="pnl-hero ${pnl>=0?'pnl-up':'pnl-down'}">
-   322|          ${pnl>=0?'▲':'▼'} ${pnl>=0?'+':''}${f(pnl)} SOL
-   323|        </div>
-   324|      </div>
-   325|    </div>
-   326|
-   327|    <!-- Gauges -->
-   328|    <div class="gauges">
-   329|      <div class="gauge"><div class="gauge-val">${totalTrades}</div><div class="gauge-label">TRADES</div></div>
-   330|      <div class="gauge"><div class="gauge-val ${winRate>=50?'':'data-red'}">${winRate.toFixed(0)}%</div><div class="gauge-label">WIN RATE</div></div>
-   331|      <div class="gauge"><div class="gauge-val">${pos.length}</div><div class="gauge-label">ACTIVE</div></div>
-   332|    </div>
-   333|
-   334|    <!-- Stats -->
-   335|    <div class="data-grid">
-   336|      <div class="data-item"><div class="data-val data-green">${wins}</div><div class="data-label">WINS</div></div>
-   337|      <div class="data-item"><div class="data-val data-red">${losses}</div><div class="data-label">LOSSES</div></div>
-   338|      <div class="data-item"><div class="data-val data-gold">+${f(bigWin)}</div><div class="data-label">BEST</div></div>
-   339|      <div class="data-item"><div class="data-val data-red">${f(bigLoss)}</div><div class="data-label">WORST</div></div>
-   340|    </div>
-   341|
-   342|    <!-- Chart -->
-   343|    ${cData.length>=2?`
-   344|    <div class="panel">
-   345|      <div class="panel-header">
-   346|        <span class="panel-title">PERFORMANCE</span>
-   347|        <span class="panel-badge">CUMULATIVE</span>
-   348|      </div>
-   349|      <div class="chart-box"><canvas id="pnlChart"></canvas></div>
-   350|    </div>`:''}
-   351|
-   352|    <!-- Positions -->
-   353|    ${pos.length>0?`
-   354|    <div class="panel">
-   355|      <div class="panel-header">
-   356|        <span class="panel-title">ACTIVE POSITIONS</span>
-   357|        <span class="panel-badge">${pos.length}</span>
-   358|      </div>
-   359|      ${pos.map(p=>`
-   360|        <div class="pos-row">
-   361|          <div class="pos-dot"></div>
-   362|          <div class="pos-info">
-   363|            <div class="pos-name">$${p.symbol}</div>
-   364|            <div class="pos-meta">MCAP $${(p.mcap||0).toLocaleString()} · ${timeAgo(Date.now()/1000-p.age||0)}</div>
-   365|          </div>
-   366|          <div class="pos-entry">${f(p.entry_sol)} SOL</div>
-   367|        </div>
-   368|      `).join('')}
-   369|    </div>`:''}
-   370|
-   371|    <!-- Trade Log -->
-   372|    <div class="panel">
-   373|      <div class="panel-header">
-   374|        <span class="panel-title">TRANSACTION LOG</span>
-   375|        <span class="panel-badge">${trades.length}</span>
-   376|      </div>
-   377|      ${trades.slice(-20).reverse().map(t=>`
-   378|        <div class="log-line">
-   379|          <span class="log-time">${timeAgo(t.time)}</span>
-   380|          <span class="log-action ${t.type==='BUY'?'log-buy':t.type==='SELL'?'log-sell':'log-stop'}">${t.type==='BUY'?'▶':t.type==='SELL'?'◆':'■'}</span>
-   381|          <span class="log-symbol">$${t.symbol||'???'}</span>
-   382|          <span class="log-amount">${f(t.sol)} SOL</span>
-   383|          ${t.pnl!=null?`<span class="log-amount ${t.pnl>=0?'log-pnl-pos':'log-pnl-neg'}">${t.pnl>=0?'+':''}${f(t.pnl)}</span>`:''}
-   384|        </div>
-   385|      `).join('')}
-   386|      ${trades.length===0?'<div style="text-align:center;color:var(--dim);padding:20px;font-size:10px;letter-spacing:2px">AWAITING SIGNAL...</div>':''}
-   387|    </div>
-   388|
-   389|    <!-- Footer -->
-   390|    <div class="jarvis-footer">
-   391|      <span>J.A.R.V.I.S.</span> · TRADING INTELLIGENCE · v8
-   392|      <div style="margin-top:4px;font-size:8px;color:var(--dim)">AUTO-REFRESH 30S</div>
-   393|    </div>
-   394|  `;
-   395|
-   396|  // Chart
-   397|  if (cData.length>=2) setTimeout(()=>{
-   398|    const cvs=document.getElementById('pnlChart'); if(!cvs||chart) return;
-   399|    const lastVal = parseFloat(cData[cData.length-1]);
-   400|    chart = new Chart(cvs, {
-   401|      type:'line',
-   402|      data:{labels:cLabels,datasets:[{
-   403|        data:cData, borderColor:lastVal>=0?'#00ff88':'#ff3366',
-   404|        backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,160); g.addColorStop(0,lastVal>=0?'rgba(0,255,136,0.15)':'rgba(255,51,102,0.15)');g.addColorStop(1,'transparent');return g;},
-   405|        borderWidth:1.5,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:lastVal>=0?'#00ff88':'#ff3366'
-   406|      }]},
-   407|      options:{
-   408|        responsive:true,maintainAspectRatio:false,
-   409|        plugins:{legend:{display:false}},
-   410|        scales:{
-   411|          x:{grid:{color:'rgba(0,180,255,0.05)'},ticks:{color:'#406080',font:{size:8}}},
-   412|          y:{grid:{color:'rgba(0,180,255,0.05)'},ticks:{color:'#406080',font:{size:8},callback:v=>v+' SOL'}}
-   413|        }
-   414|      }
-   415|    });
-   416|  },200);
-   417|}
-   418|
-   419|// Init
-   420|fetchData().then(render);
-   421|setInterval(async()=>{
-   422|  const data = await fetchData();
-   423|  if(data){ if(chart){chart.destroy();chart=null;} render(data); }
-   424|},30000);
-   425|</script>
-   426|</body>
-   427|</html>
-   428|
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>J.A.R.V.I.S. — Trading Intelligence</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #000a14;
+  --surface: rgba(0,20,50,0.85);
+  --surface2: rgba(0,30,70,0.7);
+  --border: rgba(0,180,255,0.15);
+  --glow: rgba(0,200,255,0.4);
+  --cyan: #00d4ff;
+  --cyan2: #00a8cc;
+  --blue: #0066ff;
+  --green: #00ff88;
+  --red: #ff3366;
+  --gold: #ffcc00;
+  --white: #e0f0ff;
+  --text: #a0c8e0;
+  --dim: #406080;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Particle BG */
+canvas#particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Scan line */
+.scanline {
+  position: fixed; inset: 0; z-index: 999; pointer-events: none;
+  background: linear-gradient(transparent 50%, rgba(0,180,255,0.02) 50%);
+  background-size: 100% 4px;
+}
+
+/* Main */
+.app { position: relative; z-index: 1; max-width: 500px; margin: 0 auto; padding: 10px; }
+
+/* JARVIS Orb */
+.orb-section {
+  display: flex; flex-direction: column; align-items: center; padding: 16px 0 10px;
+}
+.orb {
+  width: 100px; height: 100px; border-radius: 50%;
+  position: relative;
+  background: radial-gradient(circle at 35% 35%, rgba(0,200,255,0.3), rgba(0,50,150,0.1) 60%, transparent);
+  border: 1px solid rgba(0,200,255,0.3);
+  box-shadow: 0 0 40px rgba(0,180,255,0.2), inset 0 0 30px rgba(0,150,255,0.1);
+  animation: orbPulse 3s ease-in-out infinite;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 6px;
+}
+.orb-inner {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,220,255,0.6), rgba(0,100,200,0.2));
+  box-shadow: 0 0 20px var(--glow);
+  animation: innerGlow 2s ease-in-out infinite;
+}
+@keyframes orbPulse {
+  0%,100% { box-shadow: 0 0 40px rgba(0,180,255,0.2), inset 0 0 30px rgba(0,150,255,0.1); }
+  50% { box-shadow: 0 0 60px rgba(0,200,255,0.35), inset 0 0 40px rgba(0,180,255,0.15); }
+}
+@keyframes innerGlow {
+  0%,100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.orb-ring {
+  position: absolute; inset: -8px; border-radius: 50%;
+  border: 1px solid transparent;
+  border-top-color: rgba(0,200,255,0.4);
+  animation: spin 4s linear infinite;
+}
+.orb-ring:nth-child(3) { inset: -16px; animation-duration: 6s; border-top-color: rgba(0,150,255,0.2); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.jarvis-label {
+  font-size: 11px; letter-spacing: 4px; color: var(--cyan);
+  text-transform: uppercase; margin-bottom: 2px; opacity: 0.7;
+}
+.jarvis-greeting {
+  font-size: 12px; color: var(--cyan2); letter-spacing: 2px;
+  animation: fadeText 3s ease-in-out infinite;
+}
+@keyframes fadeText { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* Panel */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+  position: relative;
+  backdrop-filter: blur(20px);
+}
+.panel::before {
+  content: ''; position: absolute; top: 0; left: 16px; right: 16px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.5;
+}
+.panel-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+}
+.panel-title {
+  font-size: 10px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-title::before { content: '◆'; font-size: 6px; }
+.panel-badge {
+  font-size: 9px; padding: 2px 8px; border: 1px solid rgba(0,200,255,0.2);
+  border-radius: 2px; color: var(--cyan2); letter-spacing: 1px;
+}
+
+/* Hero Balance */
+.hero {
+  text-align: center; padding: 6px 0;
+}
+.balance-num {
+  font-size: 52px; font-weight: 300; letter-spacing: -2px;
+  color: var(--cyan);
+  text-shadow: 0 0 30px rgba(0,200,255,0.3);
+  font-variant-numeric: tabular-nums;
+}
+.balance-unit {
+  font-size: 13px; color: var(--dim); letter-spacing: 3px; margin-top: 2px;
+}
+.pnl-hero {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; padding: 4px 14px; margin-top: 6px;
+  border: 1px solid; letter-spacing: 1px;
+}
+.pnl-up { color: var(--green); border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.05); }
+.pnl-down { color: var(--red); border-color: rgba(255,51,102,0.3); background: rgba(255,51,102,0.05); }
+
+/* Gauges Row */
+.gauges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+.gauge {
+  text-align: center; padding: 10px 6px;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+}
+.gauge-val { font-size: 22px; font-weight: 300; color: var(--cyan); }
+.gauge-label { font-size: 9px; letter-spacing: 2px; color: var(--dim); margin-top: 3px; text-transform: uppercase; }
+
+/* Data Grid */
+.data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.data-item {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px; text-align: center;
+}
+.data-val { font-size: 18px; font-weight: 300; color: var(--cyan); }
+.data-label { font-size: 8px; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; margin-top: 3px; }
+.data-green { color: var(--green); }
+.data-red { color: var(--red); }
+.data-gold { color: var(--gold); }
+
+/* Chart */
+.chart-box { position: relative; height: 160px; margin: 6px 0; }
+.chart-box canvas { width: 100% !important; }
+
+/* Log lines */
+.log-line {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 6px 10px; font-size: 11px; border-bottom: 1px solid rgba(0,180,255,0.05);
+  font-family: inherit;
+}
+.log-time { color: var(--dim); white-space: nowrap; font-size: 10px; }
+.log-action { min-width: 32px; font-size: 11px; }
+.log-buy { color: var(--cyan); }
+.log-sell { color: var(--green); }
+.log-stop { color: var(--red); }
+.log-symbol { font-weight: 600; color: var(--cyan2); flex: 1; }
+.log-amount { color: var(--text); text-align: right; white-space: nowrap; }
+.log-pnl-pos { color: var(--green); }
+.log-pnl-neg { color: var(--red); }
+
+/* Position card */
+.pos-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; margin-bottom: 6px;
+}
+.pos-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 8px var(--glow);
+  flex-shrink: 0;
+}
+.pos-info { flex: 1; min-width: 0; }
+.pos-name { font-size: 13px; color: var(--cyan); font-weight: 600; }
+.pos-meta { font-size: 9px; color: var(--dim); letter-spacing: 1px; }
+.pos-entry { font-size: 11px; color: var(--text); }
+
+/* Status bar */
+.status-row {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.status-dot {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; letter-spacing: 2px; color: var(--green);
+  text-transform: uppercase;
+}
+.status-dot::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 6px var(--green);
+  animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Footer JARVIS */
+.jarvis-footer {
+  text-align: center; padding: 16px 0; font-size: 10px; color: var(--dim); letter-spacing: 2px;
+}
+.jarvis-footer span { color: var(--cyan2); }
+
+/* Responsive */
+@media (max-width: 380px) {
+  .balance-num { font-size: 40px; }
+  .gauge-val { font-size: 18px; }
+  .data-val { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="scanline"></div>
+
+<div class="app" id="app">
+  <div style="text-align:center;padding:60px 0;color:var(--dim)">
+    <div class="orb" style="margin:0 auto 20px"><div class="orb-inner"></div><div class="orb-ring"></div><div class="orb-ring"></div></div>
+    <div style="letter-spacing:4px">INITIALIZING</div>
+  </div>
+</div>
+
+<script>
+const API = 'https://raw.githubusercontent.com/kiwizhk-gif/kiwizhk-gif.github.io/main/dash_data.json';
+
+// Particle system
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+class Particle {
+  constructor() { this.reset(); this.y = Math.random() * canvas.height; }
+  reset() { this.x = Math.random() * canvas.width; this.y = -5; this.vx = (Math.random()-0.5)*0.5; this.vy = 0.3 + Math.random()*0.7; this.size = Math.random()*1.5+0.5; this.opacity = Math.random()*0.5+0.2; }
+  update() { this.x += this.vx; this.y += this.vy; if (this.y > canvas.height+5) this.reset(); if (this.x<0) this.x=canvas.width; if (this.x>canvas.width) this.x=0; }
+  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(0,200,255,${this.opacity})`; ctx.fill(); }
+}
+for (let i=0; i<80; i++) particles.push(new Particle());
+function animateParticles() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles); }
+animateParticles();
+
+// Data
+async function fetchData() {
+  try { const r = await fetch(API+'?t='+Date.now()); if (!r.ok) throw new Error(); return await r.json(); }
+  catch(e) { return null; }
+}
+
+function f(n,d=4) { return n!=null?Number(n).toFixed(d):'—'; }
+function fs(n) { return Number(n).toFixed(2); }
+function timeAgo(ts) { const d=(Date.now()/1000)-ts; if(d<60) return Math.floor(d)+'s'; if(d<3600) return Math.floor(d/60)+'m'; return Math.floor(d/3600)+'h'; }
+
+let chart = null;
+
+function render(data) {
+  const app = document.getElementById('app');
+  if (!data) { app.innerHTML = '<div style="text-align:center;padding:60px"><div style="color:var(--red);letter-spacing:2px">CONNECTION LOST</div><div style="color:var(--dim);font-size:10px;margin-top:8px">Retrying in 30s...</div></div>'; return; }
+
+  const bal = data.balance || 0; const pnl = data.pnl || 0; const trades = data.trades || [];
+  const pos = data.positions || []; const tokens = data.tokens_found || 0;
+  const solPrice = 145;
+
+  let wins=0,losses=0,totalPnL=0,bigWin=0,bigLoss=0;
+  trades.forEach(t=>{
+    if(t.type==='SELL'){totalPnL+=t.pnl||0; if(t.pnl>0)wins++;else losses++; if(t.pnl>bigWin)bigWin=t.pnl; if(t.pnl<bigLoss)bigLoss=t.pnl;}
+    if(t.type==='STOP'){totalPnL+=t.pnl||0;losses++; if(t.pnl<bigLoss)bigLoss=t.pnl;}
+  });
+  const totalTrades = wins+losses;
+  const winRate = totalTrades>0?(wins/totalTrades*100):0;
+
+  // Chart data
+  let cum=0; const cLabels=[],cData=[];
+  trades.forEach(t=>{if(t.type==='SELL'||t.type==='STOP'){cum+=t.pnl||0; cLabels.push(t.symbol); cData.push(cum.toFixed(6));}});
+
+  const now = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+
+  app.innerHTML = `
+    <!-- Orb -->
+    <div class="orb-section">
+      <div style="font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:4px">J.A.R.V.I.S.</div>
+      <div class="orb"><div class="orb-inner"></div><div class="orb-ring"></div><div class="orb-ring"></div></div>
+      <div class="jarvis-greeting">At your service, sir. All systems operational.</div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-row">
+      <span class="status-dot">ONLINE</span>
+      <span style="font-size:10px;color:var(--dim);letter-spacing:2px">${now} ICT</span>
+      <span style="font-size:10px;color:var(--dim);letter-spacing:2px">🪙 ${tokens}</span>
+    </div>
+
+    <!-- Balance -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">PORTFOLIO</span>
+        <span class="panel-badge">SOL</span>
+      </div>
+      <div class="hero">
+        <div class="balance-num">${fs(bal)}</div>
+        <div class="balance-unit">SOL · $${fs(bal*solPrice)} USD</div>
+        <div class="pnl-hero ${pnl>=0?'pnl-up':'pnl-down'}">
+          ${pnl>=0?'▲':'▼'} ${pnl>=0?'+':''}${f(pnl)} SOL
+        </div>
+      </div>
+    </div>
+
+    <!-- Gauges -->
+    <div class="gauges">
+      <div class="gauge"><div class="gauge-val">${totalTrades}</div><div class="gauge-label">TRADES</div></div>
+      <div class="gauge"><div class="gauge-val ${winRate>=50?'':'data-red'}">${winRate.toFixed(0)}%</div><div class="gauge-label">WIN RATE</div></div>
+      <div class="gauge"><div class="gauge-val">${pos.length}</div><div class="gauge-label">ACTIVE</div></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="data-grid">
+      <div class="data-item"><div class="data-val data-green">${wins}</div><div class="data-label">WINS</div></div>
+      <div class="data-item"><div class="data-val data-red">${losses}</div><div class="data-label">LOSSES</div></div>
+      <div class="data-item"><div class="data-val data-gold">+${f(bigWin)}</div><div class="data-label">BEST</div></div>
+      <div class="data-item"><div class="data-val data-red">${f(bigLoss)}</div><div class="data-label">WORST</div></div>
+    </div>
+
+    <!-- Chart -->
+    ${cData.length>=2?`
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">PERFORMANCE</span>
+        <span class="panel-badge">CUMULATIVE</span>
+      </div>
+      <div class="chart-box"><canvas id="pnlChart"></canvas></div>
+    </div>`:''}
+
+    <!-- Positions -->
+    ${pos.length>0?`
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">ACTIVE POSITIONS</span>
+        <span class="panel-badge">${pos.length}</span>
+      </div>
+      ${pos.map(p=>`
+        <div class="pos-row">
+          <div class="pos-dot"></div>
+          <div class="pos-info">
+            <div class="pos-name">$${p.symbol}</div>
+            <div class="pos-meta">MCAP $${(p.mcap||0).toLocaleString()} · ${timeAgo(Date.now()/1000-p.age||0)}</div>
+          </div>
+          <div class="pos-entry">${f(p.entry_sol)} SOL</div>
+        </div>
+      `).join('')}
+    </div>`:''}
+
+    <!-- Trade Log -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">TRANSACTION LOG</span>
+        <span class="panel-badge">${trades.length}</span>
+      </div>
+      ${trades.slice(-20).reverse().map(t=>`
+        <div class="log-line">
+          <span class="log-time">${timeAgo(t.time)}</span>
+          <span class="log-action ${t.type==='BUY'?'log-buy':t.type==='SELL'?'log-sell':'log-stop'}">${t.type==='BUY'?'▶':t.type==='SELL'?'◆':'■'}</span>
+          <span class="log-symbol">$${t.symbol||'???'}</span>
+          <span class="log-amount">${f(t.sol)} SOL</span>
+          ${t.pnl!=null?`<span class="log-amount ${t.pnl>=0?'log-pnl-pos':'log-pnl-neg'}">${t.pnl>=0?'+':''}${f(t.pnl)}</span>`:''}
+        </div>
+      `).join('')}
+      ${trades.length===0?'<div style="text-align:center;color:var(--dim);padding:20px;font-size:10px;letter-spacing:2px">AWAITING SIGNAL...</div>':''}
+    </div>
+
+    <!-- Footer -->
+    <div class="jarvis-footer">
+      <span>J.A.R.V.I.S.</span> · TRADING INTELLIGENCE · v8
+      <div style="margin-top:4px;font-size:8px;color:var(--dim)">AUTO-REFRESH 30S</div>
+    </div>
+  `;
+
+  // Chart
+  if (cData.length>=2) setTimeout(()=>{
+    const cvs=document.getElementById('pnlChart'); if(!cvs||chart) return;
+    const lastVal = parseFloat(cData[cData.length-1]);
+    chart = new Chart(cvs, {
+      type:'line',
+      data:{labels:cLabels,datasets:[{
+        data:cData, borderColor:lastVal>=0?'#00ff88':'#ff3366',
+        backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,160); g.addColorStop(0,lastVal>=0?'rgba(0,255,136,0.15)':'rgba(255,51,102,0.15)');g.addColorStop(1,'transparent');return g;},
+        borderWidth:1.5,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:lastVal>=0?'#00ff88':'#ff3366'
+      }]},
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{grid:{color:'rgba(0,180,255,0.05)'},ticks:{color:'#406080',font:{size:8}}},
+          y:{grid:{color:'rgba(0,180,255,0.05)'},ticks:{color:'#406080',font:{size:8},callback:v=>v+' SOL'}}
+        }
+      }
+    });
+  },200);
+}
+
+// Init
+fetchData().then(render);
+setInterval(async()=>{
+  const data = await fetchData();
+  if(data){ if(chart){chart.destroy();chart=null;} render(data); }
+},30000);
+</script>
+</body>
+</html>
