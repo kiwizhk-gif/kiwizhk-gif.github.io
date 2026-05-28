@@ -1849,16 +1849,16 @@
       "symbol": "Danhausen",
       "mcap": 2551.5024784120387,
       "entry_sol": 0.005,
-      "age": 131.82344150543213
+      "age": 240.4837749004364
     },
     {
       "symbol": "NewsRadar",
       "mcap": 2560.3296804772913,
       "entry_sol": 0.005,
-      "age": 29.56490159034729
+      "age": 138.2252345085144
     }
   ],
-  "tokens_found": 1923,
+  "tokens_found": 1949,
   "start_time": 1779954267.8702471,
   "running": true,
   "tx_history": [
@@ -3727,6 +3727,6 @@
     "avg_trade_size": 0.005119,
     "sol_price_usd": 145
   },
-  "updated_at": 1779961507.1700075,
-  "updated_at_iso": "2026-05-28T05:45:07"
+  "updated_at": 1779961615.6324215,
+  "updated_at_iso": "2026-05-28T05:46:55"
 }
