@@ -105,7 +105,7 @@
       "symbol": "NOMAMES",
       "mcap": 4850.146900372879,
       "entry_sol": 0.008,
-      "age": 565.9016983509064,
+      "age": 689.299400806427,
       "strategy": "moon"
     }
   ],
@@ -234,6 +234,6 @@
     "avg_trade_size": 0.009,
     "sol_price_usd": 145
   },
-  "updated_at": 1779958933.2584043,
-  "updated_at_iso": "2026-05-28T05:02:13"
+  "updated_at": 1779959055.6438446,
+  "updated_at_iso": "2026-05-28T05:04:15"
 }
