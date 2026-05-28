@@ -12,6 +12,17 @@
       "buyTime": 1779962542391,
       "highestValue": 0.015,
       "alertScore": 20
+    },
+    {
+      "mint": "HbBjwPyCFst9Voy7fds4Rawp5jYvyGxAmVAo9THmpump",
+      "name": "$CLAVA",
+      "symbol": "$CLAVA",
+      "entrySol": 0.015,
+      "entryTokens": 435091004808,
+      "buyTx": "4Mksn7t4byh7dXpSa8keHbFnbuXK9ZrzeEWxiLnwFoB53kFcATXf2knpGorAvCjmt488nnZ64Q1VNczf5yoED27H",
+      "buyTime": 1779962584331,
+      "highestValue": 0.015,
+      "alertScore": 20
     }
   ],
   "trades": [
@@ -70,6 +81,14 @@
       "sol": -0.015,
       "pnl": null,
       "tx": "4zaQjHv8iGpWDcdK..."
+    },
+    {
+      "time_iso": "06:03:04",
+      "type": "BUY",
+      "symbol": "$CLAVA",
+      "sol": -0.015,
+      "pnl": null,
+      "tx": "4Mksn7t4byh7dXpS..."
     }
   ],
   "perps": {
@@ -82,8 +101,8 @@
   },
   "running": true,
   "metrics": {
-    "total_trades": 7,
-    "buys": 4,
+    "total_trades": 8,
+    "buys": 5,
     "sells": 3,
     "wins": 0,
     "losses": 3,
@@ -95,9 +114,9 @@
     "biggest_win": -0.000296,
     "biggest_loss": -0.000296,
     "max_drawdown": 0.000889,
-    "roi_pct": -1.7,
+    "roi_pct": -1.3,
     "sharpe": 0
   },
-  "updated_at": 1779962583.2430718,
-  "updated_at_iso": "2026-05-28T06:03:03"
+  "updated_at": 1779962610.454478,
+  "updated_at_iso": "2026-05-28T06:03:30"
 }
