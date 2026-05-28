@@ -1,6 +1,6 @@
 {
   "balance": 0.056439818,
-  "pnl": 0.00210858,
+  "pnl": -0.0010875400000000001,
   "trades": [
     {
       "time": "2026-05-28T02:37:00.318573",
@@ -56,6 +56,21 @@
       "sol": 0.005,
       "tx": "3BvBaVxpc3s6PVrbsrPDwn3mam4ndBrLZC4euE2HT5akVQ5oNqtyHh2v6hUSUwmVXmojrXWDNHGCdBQDtsDJ6FWg",
       "time": 1779954336.224682
+    },
+    {
+      "type": "STOP",
+      "symbol": "ending it",
+      "sol": 0.001804,
+      "pnl": -0.003196,
+      "tx": "4T46fLEA5HKHA5Ui3CF1FPwof9YLXR35dX7WMnth1wqQB7zDveuygrXz1haKxJ56foRv11NHvseo6k8FrNZ9Go5D",
+      "time": 1779954349.8505242
+    },
+    {
+      "type": "BUY",
+      "symbol": "lol",
+      "sol": 0.005,
+      "tx": "48UqL8L7Vg8Rizp5g6h43uauPvhSaa2o3E4vHZdgVoo1Q9viXbznskWzLDh9oNiwnpeSV8qfSNLXU31MrghbukeV",
+      "time": 1779954364.8641062
     }
   ],
   "positions": [
@@ -63,18 +78,18 @@
       "symbol": "BENDOG",
       "mcap": 3746.917769100474,
       "entry_sol": 0.005,
-      "age": 60.281060218811035
+      "age": 93.67971730232239
     },
     {
-      "symbol": "ending it",
-      "mcap": 2280.8139379375198,
+      "symbol": "lol",
+      "mcap": 2956.0729123831143,
       "entry_sol": 0.005,
-      "age": 7.152557373046875e-06
+      "age": 4.759244918823242
     }
   ],
-  "tokens_found": 52,
+  "tokens_found": 58,
   "start_time": 1779954267.8702471,
   "running": true,
-  "updated_at": 1779954338.7409647,
-  "updated_at_iso": "2026-05-28T03:45:38"
+  "updated_at": 1779954370.4562438,
+  "updated_at_iso": "2026-05-28T03:46:10"
 }
