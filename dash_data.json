@@ -1,7 +1,7 @@
 {
-  "balance": 0.038879077,
-  "balance_usd": 5.64,
-  "pnl": -0.001185,
+  "balance": 0.050377778,
+  "balance_usd": 7.3,
+  "pnl": -0.001481,
   "trades": [
     {
       "time_iso": "05:39:51",
@@ -162,6 +162,22 @@
       "price_impact": null,
       "status": "executed",
       "time": 1779962247.373
+    },
+    {
+      "time_iso": "05:58:54",
+      "time_unix": 1779962334.509,
+      "type": "SELL",
+      "symbol": "STDS",
+      "sol": 0.011704,
+      "amount_sol": 0.011704,
+      "pnl": -0.000296,
+      "pnl_sol": -0.000296,
+      "pnl_pct": -2.5,
+      "tx_id": "2qvrRxkw39KwJ4fU...",
+      "tx_full": "2qvrRxkw39KwJ4fUWKzyj9z92TM6Ur4WZTBtZnEdgoJkLdZVztzyUb882au3BowKm1AbbYpNv2SHqRhZhYc5vpZA",
+      "price_impact": null,
+      "status": "executed",
+      "time": 1779962334.509
     }
   ],
   "positions": [
@@ -178,7 +194,7 @@
     }
   ],
   "tokens_found": 0,
-  "start_time": 1779962305.4587827,
+  "start_time": 1779962337.086307,
   "running": true,
   "tx_history": [
     {
@@ -340,25 +356,41 @@
       "price_impact": null,
       "status": "executed",
       "time": 1779962247.373
+    },
+    {
+      "time_iso": "05:58:54",
+      "time_unix": 1779962334.509,
+      "type": "SELL",
+      "symbol": "STDS",
+      "sol": 0.011704,
+      "amount_sol": 0.011704,
+      "pnl": -0.000296,
+      "pnl_sol": -0.000296,
+      "pnl_pct": -2.5,
+      "tx_id": "2qvrRxkw39KwJ4fU...",
+      "tx_full": "2qvrRxkw39KwJ4fUWKzyj9z92TM6Ur4WZTBtZnEdgoJkLdZVztzyUb882au3BowKm1AbbYpNv2SHqRhZhYc5vpZA",
+      "price_impact": null,
+      "status": "executed",
+      "time": 1779962334.509
     }
   ],
   "metrics": {
-    "total_trades": 10,
+    "total_trades": 11,
     "buys": 6,
-    "sells": 4,
+    "sells": 5,
     "wins": 0,
-    "losses": 4,
+    "losses": 5,
     "win_rate": 0.0,
     "total_bought": -0.072,
-    "total_sold": 0.046815,
-    "total_pnl": -0.001185,
-    "total_fees_est": 5e-05,
+    "total_sold": 0.058519,
+    "total_pnl": -0.001481,
+    "total_fees_est": 5.5e-05,
     "avg_win": 0,
     "avg_loss": -0.000296,
     "profit_factor": 0.0,
     "biggest_win": -0.000296,
     "biggest_loss": -0.000296,
-    "max_drawdown": 0.001185,
+    "max_drawdown": 0.001481,
     "roi_pct": 0,
     "sharpe": 0,
     "initial_capital": -0.072,
@@ -366,6 +398,6 @@
     "avg_trade_size": -0.012,
     "sol_price_usd": 145
   },
-  "updated_at": 1779962305.4588025,
-  "updated_at_iso": "2026-05-28T05:58:25"
+  "updated_at": 1779962337.0863233,
+  "updated_at_iso": "2026-05-28T05:58:57"
 }
