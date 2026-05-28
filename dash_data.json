@@ -1,6 +1,6 @@
 {
   "balance": 0.056439818,
-  "pnl": -0.0022593110000000013,
+  "pnl": 0,
   "trades": [
     {
       "time": "2026-05-28T02:37:00.318573",
@@ -15,94 +15,36 @@
     },
     {
       "type": "BUY",
-      "symbol": "yerr",
+      "symbol": "dih",
       "sol": 0.005,
-      "tx": "4e1ibMtRJQAHpTxr5RaKzqUaTUqpKApDEey3qvrZvctx4DkNfZxj4aoBvocrWPk6buziRcYztJ9teZnCgkKQdTyg",
-      "time": 1779951727.4990175
+      "tx": "W4yMoUrzXuPyeMUTHMfDpmLYe4NTsKrrjeXt12VUVB2mFhTGxqBYdrCCaudv7KqsN6wbfQPvcgEysQxFXx9ebTy",
+      "time": 1779954268.6450868
     },
     {
       "type": "BUY",
-      "symbol": "ChubbyDuck",
+      "symbol": "BENDOG",
       "sol": 0.005,
-      "tx": "hDnBYt7WxB4TRDi5LdPjbUqbAbCgBFYkLgtbsnZkk2qsaZQyG6yync1rfqv17Ps2E17PSns5oxRxDQk2ZZsPhLG",
-      "time": 1779951727.6586967
-    },
-    {
-      "type": "BUY",
-      "symbol": "SYNDROME",
-      "sol": 0.005,
-      "tx": "2r51t77spsqx47ua4QtWBUhrdU8otQ3nPwuuRuYR6HDt8KTqacgtn42J8nTtqt6FU2dKjqJkt6xQvC6T9hQJ3kZ2",
-      "time": 1779951738.2234783
-    },
-    {
-      "type": "STOP",
-      "symbol": "yerr",
-      "sol": 0.001798502,
-      "pnl": -0.003201498,
-      "tx": "kAqRE2LTuHmNQt8XnVQjWi2TKG6tG32hLNXCipoUvWABwuKdNaxKw4MpDdh1Ae15e8KALzLe31cRheNbJnEuJUy",
-      "time": 1779951738.3828623
-    },
-    {
-      "type": "BUY",
-      "symbol": "BROKE",
-      "sol": 0.005,
-      "tx": "2eExwWkxJe755x9crUuAcksv5jcQBrfLCDWUSDeT4AzWU5gsxey6wjanY7kBHNvcom5Cs8uC6rDjQMQESUdwV17e",
-      "time": 1779951752.681137
-    },
-    {
-      "type": "SELL",
-      "symbol": "ChubbyDuck",
-      "sol": 0.00936515,
-      "pnl": 0.004365149999999999,
-      "tx": "2EneeKtiGwboG8Xfe5WKXUhsz2mogxMst6wUzzbUL9yTV2g5XtNEszRnGxjs1UpGkopAVbAGggyQLMWm78d6RNfm",
-      "time": 1779952437.6421006
-    },
-    {
-      "type": "BUY",
-      "symbol": "ASV",
-      "sol": 0.005,
-      "tx": "3K8ShwcWKRoohPzspKQmAvWeARduFMZpRSxcQaeTidzwvemUbp2PFDvSgiw4UUeK2dkPiFcTrBgST9ErKoougPni",
-      "time": 1779952448.4999917
-    },
-    {
-      "type": "STOP",
-      "symbol": "ASV",
-      "sol": 0.001577037,
-      "pnl": -0.0034229630000000002,
-      "tx": "y4W1J7rVXwNriHpkRDJgiHy3jXoGFgCT7fp956CeNYX1HX1CK85GcgPhhLQSaksuvMBtP11ofUiU1i4Pevpishx",
-      "time": 1779952472.5568354
-    },
-    {
-      "type": "BUY",
-      "symbol": "SOLCLAW",
-      "sol": 0.005,
-      "tx": "4DRL2MVxPHYBNnntMqUPoQx41PtdRxjXj5YsLpbhcoeJ9eNfttYUN5zT6wzdfUjuRu67dStV3yktWKtGrb5ACS8h",
-      "time": 1779952479.1471777
+      "tx": "2UzPggN2op9HbCq2cAHP9xEn8Krvokc28TSkWY9AQccNmBMiR5XQx98jBKdKJ6gL4gxdBeLQtfxyLsLgwJEru1wx",
+      "time": 1779954275.9436285
     }
   ],
   "positions": [
     {
-      "symbol": "SYNDROME",
-      "mcap": 2342.7045578210136,
+      "symbol": "dih",
+      "mcap": 3795.790772142227,
       "entry_sol": 0.005,
-      "age": 1208.4763960838318
+      "age": 19.18218207359314
     },
     {
-      "symbol": "BROKE",
-      "mcap": 2259.213430910869,
+      "symbol": "BENDOG",
+      "mcap": 3746.917769100474,
       "entry_sol": 0.005,
-      "age": 1194.0187401771545
-    },
-    {
-      "symbol": "SOLCLAW",
-      "mcap": 2347.0695380810484,
-      "entry_sol": 0.005,
-      "age": 467.5527038574219
+      "age": 11.883640050888062
     }
   ],
-  "tokens_found": 290,
-  "start_time": 1779951725.1858985,
+  "tokens_found": 42,
+  "start_time": 1779954267.8702471,
   "running": true,
-  "updated_at": 1779952949.263319,
-  "updated_at_iso": "2026-05-28T03:22:29"
+  "updated_at": 1779954293.7245598,
+  "updated_at_iso": "2026-05-28T03:44:53"
 }
