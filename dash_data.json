@@ -1,0 +1,140 @@
+{
+  "balance": 0.056439818,
+  "pnl": 0.0018847479999999986,
+  "trades": [
+    {
+      "time": "2026-05-28T02:37:00.318573",
+      "action": "BUY",
+      "token": "***",
+      "mint": "52Ssz49XmVnxZdTApMjDKruZpTmPduaawEFNxWQBpump",
+      "amount_sol": 0.012,
+      "out_amount": "104818018990",
+      "price_impact": "0.0437122743508920419578859086",
+      "tx": "4Mz26dG1C4dVmmhom5DCqYccHPuGb6GiDSvEqjbU1L6YL4y9HgWKpHEp7FxGweEkvzyX2hjZvrpaiHBca5hS1a6o",
+      "status": "executed"
+    },
+    {
+      "type": "BUY",
+      "symbol": "dih",
+      "sol": 0.005,
+      "tx": "W4yMoUrzXuPyeMUTHMfDpmLYe4NTsKrrjeXt12VUVB2mFhTGxqBYdrCCaudv7KqsN6wbfQPvcgEysQxFXx9ebTy",
+      "time": 1779954268.6450868
+    },
+    {
+      "type": "BUY",
+      "symbol": "BENDOG",
+      "sol": 0.005,
+      "tx": "2UzPggN2op9HbCq2cAHP9xEn8Krvokc28TSkWY9AQccNmBMiR5XQx98jBKdKJ6gL4gxdBeLQtfxyLsLgwJEru1wx",
+      "time": 1779954275.9436285
+    },
+    {
+      "type": "SELL",
+      "symbol": "dih",
+      "sol": 0.010401,
+      "pnl": 0.005401,
+      "tx": "5nU3gZrYFrYxi6mJbuXFYUJb3S8B3mqLFssSF8tGreYLhhbWQi4EwoVDMrADr2BVSny189ba5LwdSQggmbmMmL25",
+      "time": 1779954297.715221
+    },
+    {
+      "type": "BUY",
+      "symbol": "MAYHEM",
+      "sol": 0.005,
+      "tx": "77rDGXgsWPVCCRteg4KYBFKXdXg89hNmuQa8K3qH3YprbBJGA8wANpSicDS237NUNCV2BdCFqaueNH6LQWoFe2p",
+      "time": 1779954307.5566533
+    },
+    {
+      "type": "STOP",
+      "symbol": "MAYHEM",
+      "sol": 0.001708,
+      "pnl": -0.003292,
+      "tx": "4Am9WTWRoTsTj9M3MjYuKjqSHYXBtfxMNkB3X6eAcMo7r2BwktYuzzqk5fL7HQKbDZ5aaqPYHEApsUCK3WrccGdy",
+      "time": 1779954332.6192615
+    },
+    {
+      "type": "BUY",
+      "symbol": "ending it",
+      "sol": 0.005,
+      "tx": "3BvBaVxpc3s6PVrbsrPDwn3mam4ndBrLZC4euE2HT5akVQ5oNqtyHh2v6hUSUwmVXmojrXWDNHGCdBQDtsDJ6FWg",
+      "time": 1779954336.224682
+    },
+    {
+      "type": "STOP",
+      "symbol": "ending it",
+      "sol": 0.001804,
+      "pnl": -0.003196,
+      "tx": "4T46fLEA5HKHA5Ui3CF1FPwof9YLXR35dX7WMnth1wqQB7zDveuygrXz1haKxJ56foRv11NHvseo6k8FrNZ9Go5D",
+      "time": 1779954349.8505242
+    },
+    {
+      "type": "BUY",
+      "symbol": "lol",
+      "sol": 0.005,
+      "tx": "48UqL8L7Vg8Rizp5g6h43uauPvhSaa2o3E4vHZdgVoo1Q9viXbznskWzLDh9oNiwnpeSV8qfSNLXU31MrghbukeV",
+      "time": 1779954364.8641062
+    },
+    {
+      "type": "STOP",
+      "symbol": "BENDOG",
+      "sol": 0.003157,
+      "pnl": -0.001843,
+      "tx": "3yPKBNqNxhJ6b7stNBLoYofdAjuc1hHsNYn3tGgdvF7xQVMSQcniCVkVomX61ZnLj1R1Yf6UHuqeaG2szLBqeB6v",
+      "time": 1779954576.383211
+    },
+    {
+      "type": "BUY",
+      "symbol": "ENGLAND",
+      "sol": 0.005,
+      "tx": "4tAJ7L11khPhQAX7iDZFfbDmh4k6YVJ1SUZNpzeoS9L9zkTubqs29dQifnqkL9vHPKWghNzELCTXYPTjHCGLu51G",
+      "time": 1779954586.6112359
+    },
+    {
+      "type": "STOP",
+      "symbol": "lol",
+      "sol": 0.003968,
+      "pnl": -0.001032,
+      "tx": "3eTxHJ7RatEWao19herFMT4KLUCsUYGXZ7Zs8Myj3tWqCmKMgfHFUxEgzdK2u7rCAJKjK9nFKtNuJSXEs4sjzFCA",
+      "time": 1779954666.2255833
+    },
+    {
+      "type": "BUY",
+      "symbol": "$PEEP",
+      "sol": 0.005,
+      "tx": "5ixURoL243am82PKza2nVSReCoJqQ2bbpi5tGPPrafW7wG9oHfqrzV1ikArm3xH4SUQdcWxd799qtFuWG7LCZVst",
+      "time": 1779954677.5243099
+    },
+    {
+      "type": "SELL",
+      "symbol": "$PEEP",
+      "sol": 0.010847,
+      "pnl": 0.005847,
+      "tx": "4vGSueWmFMFh4QJZKHSqdzsryiC3VKnfuGYFZTaXikAodGtAdYoVVqdfuJEqX9ZpgUcRWpUJxqn5tiEzPyRRdRoV",
+      "time": 1779954699.120329
+    },
+    {
+      "type": "BUY",
+      "symbol": "dih",
+      "sol": 0.005,
+      "tx": "4gHDchrNnNZYzkVtWyShiGr2cKdxFXLQq3nqAbGot5KravkWQHqDipEiVht9LiKTKoWfSsMogBWGhFBHh2xfeXEF",
+      "time": 1779954702.8707926
+    }
+  ],
+  "positions": [
+    {
+      "symbol": "ENGLAND",
+      "mcap": 2266.8733230798684,
+      "entry_sol": 0.005,
+      "age": 297.68512892723083
+    },
+    {
+      "symbol": "dih",
+      "mcap": 2464.0039780548254,
+      "entry_sol": 0.005,
+      "age": 181.42559385299683
+    }
+  ],
+  "tokens_found": 251,
+  "start_time": 1779954267.8702471,
+  "running": true,
+  "updated_at": 1779954892.0031407,
+  "updated_at_iso": "2026-05-28T03:54:51"
+}
