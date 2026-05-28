@@ -21,7 +21,7 @@
     }
   ],
   "positions": [],
-  "tokens_found": 1615,
+  "tokens_found": 1628,
   "start_time": 1779955011.343426,
   "running": true,
   "tx_history": [
@@ -66,6 +66,6 @@
     "avg_trade_size": 0.012,
     "sol_price_usd": 145
   },
-  "updated_at": 1779961370.6456623,
-  "updated_at_iso": "2026-05-28T05:42:50"
+  "updated_at": 1779961384.8127131,
+  "updated_at_iso": "2026-05-28T05:43:04"
 }
